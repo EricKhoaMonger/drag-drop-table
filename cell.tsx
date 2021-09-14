@@ -3,6 +3,7 @@ import React, { DragEventHandler, memo } from 'react';
 import './cell.css';
 
 function Cell({ id, value }: { id: number; value: number }) {
+  console.log(`cell-${id}`);
   const onDragStartHandler: DragEventHandler<HTMLSpanElement> = e => {
     e.currentTarget.classList.add('grabbing');
     e.dataTransfer.setData('dragged-cell-id', String(id));
@@ -22,7 +23,7 @@ function Cell({ id, value }: { id: number; value: number }) {
     e.preventDefault();
     e.currentTarget.classList.remove('dragover');
   };
-  const onDropLeaveHandler: DragEventHandler<HTMLSpanElement> = e => {
+  const onDropHandler: DragEventHandler<HTMLSpanElement> = e => {
     e.preventDefault();
     const droppedCellValue = e.currentTarget.innerHTML;
     const draggedCellValue = e.dataTransfer.getData('dragged-cell-value');
@@ -44,11 +45,11 @@ function Cell({ id, value }: { id: number; value: number }) {
       onDragEnd={onDragEndHandler}
       onDragOver={onDragOverHandler}
       onDragLeave={onDragLeaveHandler}
-      onDrop={onDropLeaveHandler}
+      onDrop={onDropHandler}
     >
       {value}
     </span>
   );
 }
 
-export default memo(Cell);
+export default Cell;
