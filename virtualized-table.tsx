@@ -6,7 +6,7 @@ import { CellItem, OnCellChange } from './cell.types';
 import './table.css';
 import { TableProps } from './table.types';
 
-function Table({ table }: TableProps) {
+function VirtualizedTable({ table }: TableProps) {
   const [interalTable, setInternalTable] = useState<CellItem[][]>([]);
   useEffect(() => {
     console.log(table);
@@ -29,7 +29,7 @@ function Table({ table }: TableProps) {
   }, []);
   return (
     <Fragment>
-      <div>rendered without react-virualized</div>
+      <div>rendered with react-virualized</div>
       <br />
       <div className="table">
         {interalTable.map(row => (
@@ -48,4 +48,4 @@ function Table({ table }: TableProps) {
   );
 }
 
-export default Table;
+export default VirtualizedTable;

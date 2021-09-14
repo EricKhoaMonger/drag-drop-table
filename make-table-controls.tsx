@@ -7,6 +7,9 @@ import React, {
 import ReactDOM = require('react-dom');
 import { CellItem } from './cell.types';
 import Table from './table';
+import VirtualizedTable from './virtualized-table';
+
+const MAGIC_NUMBER = 200;
 
 function makeTableProps(n: number): CellItem[][] {
   let currentRowIndex = 0;
@@ -62,6 +65,20 @@ function MakeTableControls() {
     setN(String(n));
 
     const table = makeTableProps(Number(n));
+
+    if (Number(n) > MAGIC_NUMBER) {
+      ReactDOM.render(
+        <div>rendering...</div>,
+        document.getElementById('table-root')
+      );
+      setTimeout(() => {
+        ReactDOM.render(
+          <VirtualizedTable table={table} />,
+          document.getElementById('table-root')
+        );
+      });
+      return;
+    }
 
     ReactDOM.render(
       <Table table={table} />,
