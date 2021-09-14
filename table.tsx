@@ -9,7 +9,6 @@ import { TableProps } from './table.types';
 function Table({ table }: TableProps) {
   const [interalTable, setInternalTable] = useState<CellItem[][]>([]);
   useEffect(() => {
-    console.log(table);
     setInternalTable(table);
   }, [table]);
   const onCellChangeHandler: OnCellChange = useCallback((rows, cols) => {

@@ -8,70 +8,29 @@ import ReactDOM = require('react-dom');
 import { CellItem } from './cell.types';
 import Table from './table';
 import VirtualizedTable from './virtualized-table';
+import { makeTableProps } from './make-table';
+import { makeTablePropsWithWorker } from './worker';
 
-const MAGIC_NUMBER = 200;
-
-function makeTableProps(n: number): CellItem[][] {
-  let currentRowIndex = 0;
-  const table: CellItem[][] = [];
-  while (currentRowIndex < n) {
-    const row: CellItem[] = [];
-    for (let i = 1; i <= n; i++) {
-      const rowCell = i;
-      if (rowCell === 1) {
-        // first cell number
-        const id = rowCell + currentRowIndex;
-        row.push({
-          id: id,
-          value: id,
-          row: currentRowIndex,
-          col: rowCell
-        });
-      } else if (rowCell % 2 === 0) {
-        // even cell number
-        const id = n * rowCell - currentRowIndex;
-        row.push({
-          id: id,
-          value: id,
-          row: currentRowIndex,
-          col: rowCell
-        });
-      } else {
-        // odd cell number
-        const id = n * (rowCell - 1) + 1 + currentRowIndex;
-        row.push({
-          id: id,
-          value: id,
-          row: currentRowIndex,
-          col: rowCell
-        });
-      }
-    }
-    currentRowIndex += 1;
-    table.push(row);
-  }
-  return table;
-}
+const MAGIC_NUMBER = 100;
 
 function MakeTableControls() {
   const nRef = useRef<HTMLInputElement>(null);
-  const [n, setN] = useState<ReactText>(5);
+  const [n, setN] = useState<ReactText>(200);
 
-  const makeTable = () => {
+  const makeTable = async () => {
     if (!Number(n)) {
       return;
     }
 
     setN(String(n));
 
-    const table = makeTableProps(Number(n));
+    ReactDOM.render(
+      <div>rendering...</div>,
+      document.getElementById('table-root')
+    );
 
-    if (Number(n) > MAGIC_NUMBER) {
-      ReactDOM.render(
-        <div>rendering...</div>,
-        document.getElementById('table-root')
-      );
-      setTimeout(() => {
+    if (Number(n) >= MAGIC_NUMBER) {
+      makeTablePropsWithWorker(Number(n), table => {
         ReactDOM.render(
           <VirtualizedTable table={table} />,
           document.getElementById('table-root')
@@ -79,7 +38,7 @@ function MakeTableControls() {
       });
       return;
     }
-
+    const table = makeTableProps(Number(n));
     ReactDOM.render(
       <Table table={table} />,
       document.getElementById('table-root')
