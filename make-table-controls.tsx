@@ -5,7 +5,7 @@ import React, {
   useState
 } from 'react';
 import ReactDOM = require('react-dom');
-import Table, { Cell } from './table';
+import Table, { CellItem } from './table';
 
 function MakeTableControls() {
   const nRef = useRef<HTMLInputElement>(null);
@@ -16,9 +16,9 @@ function MakeTableControls() {
       return;
     }
     let currentRowIndex = 0;
-    const table: Cell[][] = [];
+    const table: CellItem[][] = [];
     while (currentRowIndex < n) {
-      const row: Cell[] = [];
+      const row: CellItem[] = [];
       for (let i = 1; i <= n; i++) {
         const rowCell = i;
         if (rowCell === 1) {
@@ -26,21 +26,27 @@ function MakeTableControls() {
           const id = rowCell + currentRowIndex;
           row.push({
             id: id,
-            value: id
+            value: id,
+            row: currentRowIndex,
+            col: rowCell
           });
         } else if (rowCell % 2 === 0) {
           // even cell number
           const id = Number(n) * rowCell - currentRowIndex;
           row.push({
             id: id,
-            value: id
+            value: id,
+            row: currentRowIndex,
+            col: rowCell
           });
         } else {
           // odd cell number
           const id = Number(n) * (rowCell - 1) + 1 + currentRowIndex;
           row.push({
             id: id,
-            value: id
+            value: id,
+            row: currentRowIndex,
+            col: rowCell
           });
         }
       }

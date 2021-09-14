@@ -1,16 +1,30 @@
 import React, { DragEventHandler, memo } from 'react';
 
 import './cell.css';
+import { CellItem } from './table';
 
-function Cell({ id, value }: { id: number; value: number }) {
-  console.log(`cell-${id}`);
+type DraggedRow = number;
+type DroppedRow = number;
+type DraggedCol = number;
+type DroppedCol = number;
+export type OnCellChange = (
+  rows: [DraggedRow, DroppedRow],
+  cols: [DraggedCol, DroppedCol]
+) => void;
+
+interface CellProps extends CellItem {
+  onCellChange?: OnCellChange;
+}
+
+function noop() {}
+
+function Cell(props: CellProps) {
+  const { id, value, row, col, onCellChange = noop } = props;
+
   const onDragStartHandler: DragEventHandler<HTMLSpanElement> = e => {
     e.currentTarget.classList.add('grabbing');
-    e.dataTransfer.setData('dragged-cell-id', String(id));
-    e.dataTransfer.setData(
-      'dragged-cell-value',
-      String(e.currentTarget.innerHTML)
-    );
+    e.dataTransfer.setData('dragged-cell-row', String(row));
+    e.dataTransfer.setData('dragged-cell-col', String(col));
   };
   const onDragEndHandler: DragEventHandler<HTMLSpanElement> = e => {
     e.currentTarget.classList.remove('grabbing');
@@ -25,15 +39,12 @@ function Cell({ id, value }: { id: number; value: number }) {
   };
   const onDropHandler: DragEventHandler<HTMLSpanElement> = e => {
     e.preventDefault();
-    const droppedCellValue = e.currentTarget.innerHTML;
-    const draggedCellValue = e.dataTransfer.getData('dragged-cell-value');
-    const draggedCell = document.getElementById(
-      `cell-${e.dataTransfer.getData('dragged-cell-id')}`
-    );
+    const draggedCellRow = Number(e.dataTransfer.getData('dragged-cell-row'));
+    const draggedCellCol = Number(e.dataTransfer.getData('dragged-cell-col'));
 
     e.currentTarget.classList.remove('dragover');
-    e.currentTarget.innerHTML = draggedCellValue;
-    draggedCell.innerHTML = droppedCellValue;
+
+    onCellChange([draggedCellRow, row], [draggedCellCol, col]);
   };
 
   return (
@@ -52,4 +63,4 @@ function Cell({ id, value }: { id: number; value: number }) {
   );
 }
 
-export default Cell;
+export default memo(Cell);
