@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import './cell.css';
 
@@ -45,4 +45,4 @@ function Cell({ id, value }: { id: number; value: number }) {
   );
 }
 
-export default Cell;
+export default memo(Cell);
