@@ -11,6 +11,7 @@
 
 .cell.dragover {
   background-color: #e6f7ff;
+  border: 1px dashed blue;
 }
 
 .cell.grabbing {
