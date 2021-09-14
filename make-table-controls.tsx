@@ -11,7 +11,7 @@ function MakeTableControls() {
   const nRef = useRef<HTMLInputElement>(null);
   const [n, setN] = useState<ReactText>(5);
 
-  const generateTable = () => {
+  const makeTable = () => {
     if (!Number(n)) {
       return;
     }
@@ -65,7 +65,7 @@ function MakeTableControls() {
 
   const onNInputKeydownHandler: KeyboardEventHandler<HTMLInputElement> = e => {
     if (e.key === 'Enter') {
-      generateTable();
+      makeTable();
       nRef.current.blur();
       setN(String(n));
     }
@@ -111,8 +111,8 @@ function MakeTableControls() {
         <tr>
           <td />
           <td style={{ textAlign: 'right' }}>
-            <button disabled={typeof n !== 'number'} onClick={generateTable}>
-              Generate table
+            <button disabled={typeof n !== 'number'} onClick={makeTable}>
+              make table
             </button>
           </td>
         </tr>
