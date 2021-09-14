@@ -44,7 +44,6 @@ function makeTableProps(n: number): CellItem[][] {
         });
       }
     }
-    console.log(row);
     currentRowIndex += 1;
     table.push(row);
   }
