@@ -1,0 +1,9 @@
+.table {
+  max-width: 50vw;
+  max-height: 50vh;
+  overflow: auto;
+}
+
+.row {
+  white-space: nowrap;
+}
