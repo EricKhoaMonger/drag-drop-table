@@ -1,20 +1,7 @@
 import React, { DragEventHandler, memo } from 'react';
 
 import './cell.css';
-import { CellItem } from './table';
-
-type DraggedRow = number;
-type DroppedRow = number;
-type DraggedCol = number;
-type DroppedCol = number;
-export type OnCellChange = (
-  rows: [DraggedRow, DroppedRow],
-  cols: [DraggedCol, DroppedCol]
-) => void;
-
-interface CellProps extends CellItem {
-  onCellChange?: OnCellChange;
-}
+import { CellProps } from './cell.types';
 
 function noop() {}
 

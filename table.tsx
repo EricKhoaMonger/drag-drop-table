@@ -1,19 +1,15 @@
 import produce from 'immer';
 import React, { useCallback, useEffect, useState } from 'react';
-import Cell, { OnCellChange } from './cell';
+import Cell from './cell';
+import { CellItem, OnCellChange } from './cell.types';
 
 import './table.css';
+import { TableProps } from './table.types';
 
-export interface CellItem {
-  id: number;
-  value: number;
-  row: number;
-  col: number;
-}
-
-function Table({ table }: { table: CellItem[][] }) {
+function Table({ table }: TableProps) {
   const [interalTable, setInternalTable] = useState<CellItem[][]>([]);
   useEffect(() => {
+    console.log(table);
     setInternalTable(table);
   }, [table]);
   const onCellChangeHandler: OnCellChange = useCallback((rows, cols) => {
@@ -34,7 +30,7 @@ function Table({ table }: { table: CellItem[][] }) {
   return (
     <div className="table">
       {interalTable.map(row => (
-        <div key={row[1].id} className="row">
+        <div key={row[0].id} className="row">
           {row.map(cell => (
             <Cell {...cell} key={cell.id} onCellChange={onCellChangeHandler} />
           ))}
