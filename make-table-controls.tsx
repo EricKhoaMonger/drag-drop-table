@@ -15,7 +15,7 @@ const MAGIC_NUMBER = 100;
 
 function MakeTableControls() {
   const nRef = useRef<HTMLInputElement>(null);
-  const [n, setN] = useState<ReactText>(200);
+  const [n, setN] = useState<ReactText>(50);
 
   const makeTable = async () => {
     if (!Number(n)) {
@@ -24,25 +24,40 @@ function MakeTableControls() {
 
     setN(String(n));
 
+    // can also render something to block screen if user put a large n
+    // so they can only update n after done rendering the table
     ReactDOM.render(
       <div>rendering...</div>,
       document.getElementById('table-root')
     );
 
-    if (Number(n) >= MAGIC_NUMBER) {
-      makeTablePropsWithWorker(Number(n), table => {
+    const t0 = performance.now();
+    makeTablePropsWithWorker(Number(n), table => {
+      if (Number(n) >= MAGIC_NUMBER) {
         ReactDOM.render(
           <VirtualizedTable table={table} />,
-          document.getElementById('table-root')
+          document.getElementById('table-root'),
+          () => {
+            console.log(
+              'done rendering with react-virtualized',
+              performance.now() - t0
+            );
+          }
         );
-      });
-      return;
-    }
-    const table = makeTableProps(Number(n));
-    ReactDOM.render(
-      <Table table={table} />,
-      document.getElementById('table-root')
-    );
+        return;
+      }
+
+      ReactDOM.render(
+        <Table table={table} />,
+        document.getElementById('table-root'),
+        () => {
+          console.log(
+            'done rendering without react-virtualized',
+            performance.now() - t0
+          );
+        }
+      );
+    });
   };
 
   const onNInputKeydownHandler: KeyboardEventHandler<HTMLInputElement> = e => {

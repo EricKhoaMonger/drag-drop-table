@@ -8,6 +8,8 @@ function noop() {}
 function Cell(props: CellProps) {
   const { id, value, row, col, onCellChange = noop } = props;
 
+  // console.log(`cell-${id}`)
+
   const onDragStartHandler: DragEventHandler<HTMLSpanElement> = e => {
     e.currentTarget.classList.add('grabbing');
     e.dataTransfer.setData('dragged-cell-row', String(row));
