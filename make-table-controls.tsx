@@ -5,17 +5,15 @@ import React, {
   useState
 } from 'react';
 import ReactDOM = require('react-dom');
-import { CellItem } from './cell.types';
 import Table from './table';
 import VirtualizedTable from './virtualized-table';
-import { makeTableProps } from './make-table';
 import { makeTablePropsWithWorker } from './worker';
 
 const MAGIC_NUMBER = 100;
 
 function MakeTableControls() {
   const nRef = useRef<HTMLInputElement>(null);
-  const [n, setN] = useState<ReactText>(50);
+  const [n, setN] = useState<ReactText>(500);
 
   const makeTable = async () => {
     if (!Number(n)) {
@@ -32,10 +30,10 @@ function MakeTableControls() {
     );
 
     const t0 = performance.now();
-    makeTablePropsWithWorker(Number(n), table => {
+    makeTablePropsWithWorker(Number(n), tableProps => {
       if (Number(n) >= MAGIC_NUMBER) {
         ReactDOM.render(
-          <VirtualizedTable table={table} />,
+          <VirtualizedTable table={tableProps} />,
           document.getElementById('table-root'),
           () => {
             console.log(
@@ -48,7 +46,7 @@ function MakeTableControls() {
       }
 
       ReactDOM.render(
-        <Table table={table} />,
+        <Table table={tableProps} />,
         document.getElementById('table-root'),
         () => {
           console.log(
