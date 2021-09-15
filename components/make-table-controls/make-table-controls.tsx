@@ -5,9 +5,8 @@ import React, {
   useState
 } from 'react';
 import ReactDOM = require('react-dom');
-import Table from './table';
-import VirtualizedTable from './virtualized-table';
-import { makeTablePropsWithWorker } from './worker';
+import { Table, VirtualizedTable } from '../table';
+import { makeTablePropsWithWorker } from './make-table.worker';
 
 const MAGIC_NUMBER = 100;
 

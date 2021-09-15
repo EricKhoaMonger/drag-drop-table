@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { render } from 'react-dom';
-import MakeTableControls from './make-table-controls';
+import MakeTableControls from './components/make-table-controls';
 import './style.css';
 
 function App() {

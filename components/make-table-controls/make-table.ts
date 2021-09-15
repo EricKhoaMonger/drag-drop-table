@@ -1,4 +1,4 @@
-import { CellItem } from './cell.types';
+import { CellItem } from '../cell/cell.types';
 
 export function makeTableProps(n: number): CellItem[][] {
   let currentRowIndex = 0;
