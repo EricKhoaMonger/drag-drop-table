@@ -1,8 +1,7 @@
 import produce from 'immer';
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { Grid, CellMeasurerCache } from 'react-virtualized';
-import { CellItem, OnCellChange } from '../cell/cell.types';
-import Cell from '../cell';
+import Cell, { CellItem, OnCellChange } from '../cell';
 
 import './table.css';
 import { TableProps } from './table.types';

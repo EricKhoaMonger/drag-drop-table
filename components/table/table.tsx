@@ -1,7 +1,6 @@
 import produce from 'immer';
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
-import Cell from './cell';
-import { CellItem, OnCellChange } from './cell.types';
+import Cell, { CellItem, OnCellChange } from '../cell';
 
 import './table.css';
 import { TableProps } from './table.types';
