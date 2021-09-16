@@ -72,3 +72,8 @@ export function makeTablePropsWithWorker(n: number, cb: Function) {
     }
   };
 }
+
+export function terminateWorker() {
+  worker.terminate();
+  URL.revokeObjectURL(workerURL);
+}

@@ -6,6 +6,7 @@ import React, {
 } from 'react';
 import ReactDOM = require('react-dom');
 import { Table, VirtualizedTable } from '../table';
+// import { makeTableProps } from './make-table';
 import { makeTablePropsWithWorker } from './make-table.worker';
 
 const MAGIC_NUMBER = 100;
@@ -19,6 +20,8 @@ function MakeTableControls() {
       return;
     }
 
+    const nValue = Number(n);
+
     setN(String(n));
 
     // can also render something to block screen if user put a large n
@@ -29,8 +32,9 @@ function MakeTableControls() {
     );
 
     const t0 = performance.now();
-    makeTablePropsWithWorker(Number(n), tableProps => {
-      if (Number(n) >= MAGIC_NUMBER) {
+    // const tableProps = makeTableProps(nValue);
+    makeTablePropsWithWorker(nValue, tableProps => {
+      if (nValue >= MAGIC_NUMBER) {
         ReactDOM.render(
           <VirtualizedTable table={tableProps} />,
           document.getElementById('table-root'),
